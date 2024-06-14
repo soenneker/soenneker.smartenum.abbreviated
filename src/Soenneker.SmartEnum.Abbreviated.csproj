@@ -43,7 +43,7 @@
     
     <ItemGroup>
       <PackageReference Include="Ardalis.SmartEnum" Version="8.0.0" />
-      <PackageReference Include="Soenneker.Extensions.String" Version="2.1.174" />
+      <PackageReference Include="Soenneker.Extensions.String" Version="2.1.176" />
       <PackageReference Include="Soenneker.Extensions.Type" Version="2.1.229" />
     </ItemGroup>
 </Project>
