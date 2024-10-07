@@ -3,7 +3,7 @@
 [![](https://img.shields.io/nuget/dt/soenneker.smartenum.abbreviated.svg?style=for-the-badge)](https://www.nuget.org/packages/soenneker.smartenum.abbreviated/)
 
 # ![](https://user-images.githubusercontent.com/4441470/224455560-91ed3ee7-f510-4041-a8d2-3fc093025112.png) Soenneker.SmartEnum.Abbreviated
-### A derivative of [Ardalis'](https://github.com/ardalis) [SmartEnum](https://github.com/ardalis/SmartEnum), adding support for abbrevations
+### A derivative of [Ardalis'](https://github.com/ardalis) [SmartEnum](https://github.com/ardalis/SmartEnum), adding support for abbreviations
 
 ## Installation
 

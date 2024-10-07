@@ -8,7 +8,7 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Description>A derivative of Ardalis' SmartEnum, adding support for abbrevations</Description>
+        <Description>A derivative of Ardalis' SmartEnum, adding support for abbreviations</Description>
         <Version Condition="'$(BUILD_VERSION)' == ''">2.1.0</Version>
         <Version Condition="'$(BUILD_VERSION)' != ''">$(BUILD_VERSION)</Version>
         <AssemblyName>Soenneker.SmartEnum.Abbreviated</AssemblyName>
