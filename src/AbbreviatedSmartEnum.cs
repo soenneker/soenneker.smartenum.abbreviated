@@ -44,23 +44,23 @@ public abstract class AbbreviatedSmartEnum<TEnum> : SmartEnum<TEnum> where TEnum
     /// </summary>
     public string Abbreviation { get; set; }
 
-    private static TEnum[] GetAllOptions()
+    private static List<TEnum> GetAllOptions()
     {
         Type baseType = typeof(TEnum);
 
-        TEnum[] enumArray = Assembly.GetAssembly(baseType)!
+        List<TEnum> enums = Assembly.GetAssembly(baseType)!
             .GetTypes()
             .Where(baseType.IsAssignableFrom)
             .SelectMany(t => t.GetFieldsOfType<TEnum>())
             .OrderBy(t => t.Name)
-            .ToArray();
+            .ToList();
 
-        StaticIgnoreCase = enumArray.First().IgnoreCase;
+        StaticIgnoreCase = enums.First().IgnoreCase;
 
-        return enumArray;
+        return enums;
     }
 
-    private static readonly Lazy<TEnum[]> _enumOptions = new(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
+    private static readonly Lazy<List<TEnum>> _enumOptions = new(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
 
     private static readonly Lazy<Dictionary<string, TEnum>> _fromAbbreviation = new(() => _enumOptions.Value.ToDictionary(item => item.Abbreviation));
 
