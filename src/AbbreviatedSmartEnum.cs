@@ -3,9 +3,9 @@ using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System;
-using Ardalis.SmartEnum;
 using Soenneker.Extensions.Type;
 using Soenneker.Extensions.String;
+using Soenneker.SmartEnum.Named;
 
 namespace Soenneker.SmartEnum.Abbreviated;
 
@@ -13,7 +13,7 @@ namespace Soenneker.SmartEnum.Abbreviated;
 /// Represents an abstract base class for abbreviated smart enums.
 /// </summary>
 /// <typeparam name="TEnum">The type of the enum.</typeparam>
-public abstract class AbbreviatedSmartEnum<TEnum> : SmartEnum<TEnum> where TEnum : AbbreviatedSmartEnum<TEnum>
+public abstract class AbbreviatedSmartEnum<TEnum> : NamedSmartEnum<TEnum> where TEnum : AbbreviatedSmartEnum<TEnum>
 {
     /// <summary>
     /// Initializes a new instance of the <see cref="AbbreviatedSmartEnum{TEnum}"/> class.
