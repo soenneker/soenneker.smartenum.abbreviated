@@ -42,7 +42,7 @@
     </ItemGroup>
     
     <ItemGroup>
-      <PackageReference Include="Soenneker.Extensions.String" Version="3.0.470" />
+      <PackageReference Include="Soenneker.Extensions.String" Version="3.0.473" />
       <PackageReference Include="Soenneker.Extensions.Type" Version="3.0.568" />
       <PackageReference Include="Soenneker.SmartEnum.Named" Version="3.0.5" />
     </ItemGroup>
