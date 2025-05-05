@@ -1,4 +1,4 @@
-# Contributing to Soenneker.SmartEnum.Abbreviated
+﻿# Contributing to Soenneker.SmartEnum.Abbreviated
 
 We're excited that you're interested in contributing!
 
