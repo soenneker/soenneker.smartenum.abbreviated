@@ -43,7 +43,7 @@
     
     <ItemGroup>
       <PackageReference Include="Soenneker.Extensions.String" Version="3.0.555" />
-      <PackageReference Include="Soenneker.Extensions.Type" Version="3.0.629" />
+      <PackageReference Include="Soenneker.Extensions.Type" Version="3.0.630" />
       <PackageReference Include="Soenneker.SmartEnum.Named" Version="3.0.16" />
     </ItemGroup>
 </Project>
