@@ -44,7 +44,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.Extensions.String" Version="4.0.631" />
+        <PackageReference Include="Soenneker.Extensions.String" Version="4.0.632" />
         <PackageReference Include="Soenneker.Extensions.Type" Version="4.0.669" />
         <PackageReference Include="Soenneker.SmartEnum.Named" Version="4.0.24" />
     </ItemGroup>
