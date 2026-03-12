@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Soenneker.SmartEnum.Abbreviated.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.SmartEnum.Abbreviated\Soenneker.SmartEnum.Abbreviated.csproj" />
     </ItemGroup>
 
     <ItemGroup>
