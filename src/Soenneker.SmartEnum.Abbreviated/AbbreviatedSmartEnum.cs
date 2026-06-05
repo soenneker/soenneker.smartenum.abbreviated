@@ -15,13 +15,6 @@ namespace Soenneker.SmartEnum.Abbreviated;
 /// <typeparam name="TEnum">The type of the enum.</typeparam>
 public abstract class AbbreviatedSmartEnum<TEnum> : NamedSmartEnum<TEnum> where TEnum : AbbreviatedSmartEnum<TEnum>
 {
-    /// <summary>
-    /// Initializes a new instance of the <see cref="AbbreviatedSmartEnum{TEnum}"/> class.
-    /// </summary>
-    /// <param name="name">The name of the enum value.</param>
-    /// <param name="value">The value of the enum.</param>
-    /// <param name="abbreviation">The abbreviation of the enum value.</param>
-    /// <param name="ignoreCase">A value indicating whether to ignore case when comparing abbreviations.</param>
     protected AbbreviatedSmartEnum(string name, int value, string abbreviation, bool ignoreCase = false) : base(name, value)
     {
         Abbreviation = abbreviation;
@@ -37,6 +30,9 @@ public abstract class AbbreviatedSmartEnum<TEnum> : NamedSmartEnum<TEnum> where 
     /// Gets or sets a value indicating whether to ignore case when comparing abbreviations across all instances.
     /// </summary>
     // ReSharper disable once StaticMemberInGenericType
+    /// <summary>
+    /// Gets or sets a value indicating whether static ignore case.
+    /// </summary>
     public static bool StaticIgnoreCase { get; set; }
 
     /// <summary>
