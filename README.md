@@ -3,48 +3,54 @@
 [![](https://img.shields.io/nuget/dt/soenneker.smartenum.abbreviated.svg?style=for-the-badge)](https://www.nuget.org/packages/soenneker.smartenum.abbreviated/)
 [![](https://img.shields.io/github/actions/workflow/status/soenneker/soenneker.smartenum.abbreviated/codeql.yml?label=CodeQL&style=for-the-badge)](https://github.com/soenneker/soenneker.smartenum.abbreviated/actions/workflows/codeql.yml)
 
-# ![](https://user-images.githubusercontent.com/4441470/224455560-91ed3ee7-f510-4041-a8d2-3fc093025112.png) Soenneker.SmartEnum.Abbreviated
-### A derivative of [Ardalis'](https://github.com/ardalis) [SmartEnum](https://github.com/ardalis/SmartEnum), adding support for abbreviations
+# Soenneker.SmartEnum.Abbreviated
+
+An Ardalis SmartEnum base class that adds an abbreviation and abbreviation-based lookup.
 
 ## Installation
 
-```
+```bash
 dotnet add package Soenneker.SmartEnum.Abbreviated
 ```
 
-## Usage
-
-The `AbbreviatedSmartEnum` class is an abstract base class that extends the `SmartEnum` class from Ardalis' library. It provides additional functionality for working with abbreviated enum values.
-
-To create an abbreviated SmartEnum, you need to derive a new class from `AbbreviatedSmartEnum<TEnum>`.
+## Defining an enum
 
 ```csharp
-public class LanguageType : AbbreviatedSmartEnum<LanguageType>
-{
-    public static readonly LanguageType English = new(nameof(English), 1, "EN");
-    public static readonly LanguageType Spanish = new(nameof(Spanish), 2, "ES");
-    public static readonly LanguageType French = new(nameof(French), 3, "FR");
+using Soenneker.SmartEnum.Abbreviated;
 
-    private LanguageType(string name, int value, string abbreviation)
+public sealed class Language : AbbreviatedSmartEnum<Language>
+{
+    public static readonly Language English = new(nameof(English), 1, "EN");
+    public static readonly Language Spanish = new(nameof(Spanish), 2, "ES");
+
+    private Language(string name, int value, string abbreviation)
         : base(name, value, abbreviation)
     {
     }
 }
 ```
 
-and how you use your new SmartEnum:
+Members must be exposed as static fields so the SmartEnum discovery process can find them. Abbreviations must be unique; duplicate abbreviations fail when the lookup is initialized.
+
+## Looking up abbreviations
 
 ```csharp
-string abbreviated = LanguageType.English.Abbreviation; // "EN"
+Language english = Language.FromAbbreviation("EN");
 
-// Get the enum value for the "EN" abbreviation
-LanguageType english = LanguageType.FromAbbreviation("EN");
-
-// Try to get the enum value for the "ES" abbreviation (case-insensitive)
-if (LanguageType.TryFromAbbreviation("es", ignoreCase: true, out LanguageType spanish))
+if (Language.TryFromAbbreviation("es", ignoreCase: true, out Language? spanish))
 {
-    // spanish will be the LanguageType.Spanish value
+    Console.WriteLine(spanish.Name); // Spanish
 }
 ```
 
-The IgnoreCase and StaticIgnoreCase properties allow you to control whether the abbreviation matching is case-sensitive or case-insensitive, either for a specific instance or globally across all instances of the derived enum class.
+`FromAbbreviation` throws when no match exists and uses the type's `StaticIgnoreCase` setting. `TryFromAbbreviation` does not throw for a missing or empty abbreviation and takes case sensitivity explicitly for that call.
+
+```csharp
+// Initialize the enum lookup, then change the default used by FromAbbreviation.
+_ = Language.FromAbbreviation("EN");
+Language.StaticIgnoreCase = true;
+
+Language sameValue = Language.FromAbbreviation("en");
+```
+
+`Abbreviation` is mutable for compatibility, but lookup dictionaries are created once. Treat abbreviations as immutable after members are declared; changing one later does not rebuild the lookup.

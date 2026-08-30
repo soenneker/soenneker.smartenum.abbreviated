@@ -27,12 +27,9 @@ public abstract class AbbreviatedSmartEnum<TEnum> : NamedSmartEnum<TEnum> where 
     protected bool IgnoreCase { get; }
 
     /// <summary>
-    /// Gets or sets a value indicating whether to ignore case when comparing abbreviations across all instances.
+    /// Gets or sets a value indicating whether <see cref="FromAbbreviation"/> ignores abbreviation casing.
     /// </summary>
     // ReSharper disable once StaticMemberInGenericType
-    /// <summary>
-    /// Gets or sets a value indicating whether static ignore case.
-    /// </summary>
     public static bool StaticIgnoreCase { get; set; }
 
     /// <summary>
