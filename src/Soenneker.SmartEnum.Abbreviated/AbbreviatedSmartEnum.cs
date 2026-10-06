@@ -1,6 +1,6 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Threading;
 using System;
 using Soenneker.Extensions.Type;
@@ -13,7 +13,7 @@ namespace Soenneker.SmartEnum.Abbreviated;
 /// Represents an abstract base class for abbreviated smart enums.
 /// </summary>
 /// <typeparam name="TEnum">The type of the enum.</typeparam>
-public abstract class AbbreviatedSmartEnum<TEnum> : NamedSmartEnum<TEnum> where TEnum : AbbreviatedSmartEnum<TEnum>
+public abstract class AbbreviatedSmartEnum<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields)] TEnum> : NamedSmartEnum<TEnum> where TEnum : AbbreviatedSmartEnum<TEnum>
 {
     protected AbbreviatedSmartEnum(string name, int value, string abbreviation, bool ignoreCase = false) : base(name, value)
     {
@@ -37,20 +37,32 @@ public abstract class AbbreviatedSmartEnum<TEnum> : NamedSmartEnum<TEnum> where 
     /// </summary>
     public string Abbreviation { get; set; }
 
+    private static readonly object _optionsLock = new();
+    private static List<TEnum>? _registeredOptions;
+    private static bool _optionsRead;
+
+    /// <summary>Registers all lookup values, including values declared on derived types, before the first lookup.</summary>
+    public static void RegisterAbbreviationOptions(IEnumerable<TEnum> options)
+    {
+        ArgumentNullException.ThrowIfNull(options);
+        List<TEnum> values = options.ToList();
+        lock (_optionsLock)
+        {
+            if (_optionsRead) throw new InvalidOperationException("Register enum options before the first lookup.");
+            _registeredOptions = values;
+        }
+    }
+
     private static List<TEnum> GetAllOptions()
     {
-        Type baseType = typeof(TEnum);
-
-        List<TEnum> enums = Assembly.GetAssembly(baseType)!
-            .GetTypes()
-            .Where(baseType.IsAssignableFrom)
-            .SelectMany(t => t.GetFieldsOfType<TEnum>())
-            .OrderBy(t => t.Name)
-            .ToList();
-
-        StaticIgnoreCase = enums.First().IgnoreCase;
-
-        return enums;
+        lock (_optionsLock)
+        {
+            _optionsRead = true;
+            List<TEnum> enums = (_registeredOptions ?? typeof(TEnum).GetFieldsOfType<TEnum>()).OrderBy(t => t.Name).ToList();
+            if (enums.Count != 0)
+                StaticIgnoreCase = enums[0].IgnoreCase;
+            return enums;
+        }
     }
 
     private static readonly Lazy<List<TEnum>> _enumOptions = new(GetAllOptions, LazyThreadSafetyMode.ExecutionAndPublication);
